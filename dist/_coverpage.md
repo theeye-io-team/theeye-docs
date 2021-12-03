@@ -8,3 +8,5 @@
 [Web documentation](https://github.com/theeye-io-team/theeye-web)
 [Supervisor documentation](https://github.com/theeye-io-team/theeye-supervisor)
 [Getting started](#TheEye)
+
+![color](#f0f0f0)
