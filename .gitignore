@@ -18,5 +18,6 @@ out
 theeye-web
 theeye-supervisor
 theeye-gateway
+theeye-agent
 
 dist
