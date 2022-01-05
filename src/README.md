@@ -2,7 +2,7 @@
 ## What is TheEye?
 <table>
   <tr>
-    <td> <img src="./images/TheEye-Of-Sauron.png"></td>
+    <td> <img src="/images/TheEye-Of-Sauron.png"></td>
     <td> TheEye is a process automation platform developed in NodeJS. Best used as BPM, Rapid Backoffice Development (RDA) and processes' hub.
 Technically TheEye is a choreographer 
     </td>
@@ -25,7 +25,7 @@ Technically TheEye is a choreographer
 
 ## Architecture
 
-![Image of TheEye-overview](./images/TheEye-core-Architect.png)
+![Image of TheEye-overview](/images/TheEye-core-Architect.png)
 
 If you want more information please read the https://documentation.theeye.io
 

@@ -5,8 +5,8 @@
 > An Intelligent Process Automation platform IPA
 
 <!-- [Gateway documentation](https://github.com/theeye-io-team/theeye-gateway) -->
-[Web documentation](/theeye-web)
-[Supervisor documentation](/theeye-supervisor)
+[Web documentation](/theeye-web ":ignore")
+[Supervisor documentation](/theeye-supervisor ":ignore")
 [Getting started](#TheEye)
 
 ![color](#f0f0f0)
