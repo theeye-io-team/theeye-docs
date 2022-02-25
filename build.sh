@@ -27,7 +27,7 @@ function prepareDocs {
       echo "in $(pwd); reseting repo";
       git fetch;
       git checkout ${branch}
-      git reset HEAD --hard
+      git reset origin/${branch} --hard
     )
   fi
 
