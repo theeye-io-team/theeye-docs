@@ -31,9 +31,12 @@ function prepareDocs {
     )
   fi
 
-  cp -r ${repo}/docs/ dist/${repo}/
+  if [ -d ${repo}/docs ]
+  then
+    cp -r ${repo}/docs/ dist/${repo}/
 
-  sed -i "s|/${repo}|${THEEYE_DOCS_URL}/${repo}|" dist/_coverpage.md
+    sed -i "s|/${repo}|${THEEYE_DOCS_URL}/${repo}|" dist/_coverpage.md
+  fi
 }
 
 # clean dist
@@ -41,8 +44,11 @@ rm -rf dist
 mkdir dist
 cp -r src/* dist/
 
+prepareDocs theeye-of-sauron
 prepareDocs theeye-web
 prepareDocs theeye-supervisor
 prepareDocs theeye-gateway
 prepareDocs theeye-agent
 
+# copy the README from theeye-of-sauron
+cp theeye-of-sauron/README.md dist
