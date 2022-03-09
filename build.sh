@@ -14,8 +14,9 @@ else
 fi
 echo "using branch ${branch}"
 
-function prepareDocs {
-  echo "-----------------------------------------------------------------"
+function syncDocs {
+  echo "## -----------------------------------------------------------------"
+  echo '## syncing'
   repo=${1}
 
   if [ ! -d ${repo} ];
@@ -30,6 +31,13 @@ function prepareDocs {
       git reset origin/${branch} --hard
     )
   fi
+}
+
+function compileFiles {
+  echo '## ---------'
+  echo '## compiling'
+
+  repo=${1}
 
   if [ -d ${repo}/docs ]
   then
@@ -44,11 +52,17 @@ rm -rf dist
 mkdir dist
 cp -r src/* dist/
 
-prepareDocs theeye-of-sauron
-prepareDocs theeye-web
-prepareDocs theeye-supervisor
-prepareDocs theeye-gateway
-prepareDocs theeye-agent
+syncDocs theeye-web
+compileFiles theeye-web
+syncDocs theeye-supervisor
+compileFiles theeye-supervisor
+syncDocs theeye-gateway
+compileFiles theeye-gateway
+syncDocs theeye-agent
+compileFiles theeye-agent
 
+syncDocs theeye-of-sauron
 # copy the README from theeye-of-sauron
 cp theeye-of-sauron/README.md dist
+cp -r theeye-of-sauron/docs dist
+
