@@ -1,9 +1,9 @@
 # theeye-docs
 
-### Build
+### 1. Build
 
 `THEEYE_DOCS_URL=${url} ./build.sh`
 
-### Deploy
+### 2. Deploy
 
 `./deploy.sh ${bucket}`
