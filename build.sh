@@ -3,7 +3,8 @@
 if [ -z "${THEEYE_DOCS_URL+x}" ];
 then
   echo 'Env THEEYE_DOCS_URL undefined'
-  exit;
+  THEEYE_DOCS_URL='https://documentation.theeye.io'
+  echo "using ${THEEYE_DOCS_URL}"
 fi
 
 if [ -z "${1+y}" ];
@@ -47,9 +48,11 @@ function compileFiles {
   fi
 }
 
-# clean dist
-rm -rf dist
-mkdir dist
+if [ ! -d dist ]
+then
+  mkdir dist
+fi
+
 cp -r src/* dist/
 
 syncDocs theeye-web
