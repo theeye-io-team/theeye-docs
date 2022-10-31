@@ -1,20 +1,5 @@
 #/bin/bash -e
 
-if [ -z "${THEEYE_DOCS_URL+x}" ];
-then
-  echo 'Env THEEYE_DOCS_URL undefined'
-  THEEYE_DOCS_URL='https://documentation.theeye.io'
-  echo "using ${THEEYE_DOCS_URL}"
-fi
-
-if [ -z "${1+y}" ];
-then
-  branch="development"
-else
-  branch="${1}"
-fi
-echo "using branch ${branch}"
-
 function syncDocs {
   echo "## -----------------------------------------------------------------"
   echo '## syncing'
@@ -48,11 +33,31 @@ function compileFiles {
   fi
 }
 
-if [ ! -d dist ]
+if [ -z "${THEEYE_DOCS_URL+x}" ];
 then
+  echo 'Env THEEYE_DOCS_URL is not set'
+  THEEYE_DOCS_URL='https://documentation.theeye.io'
+fi
+
+echo "using ${THEEYE_DOCS_URL}"
+
+if [ -z "${1+y}" ];
+then
+  branch="development"
+else
+  branch="${1}"
+fi
+echo "using branch ${branch}"
+
+if [ -d dist ]
+then
+  echo "recreating dist directory"
   rm -rf dist
   mkdir dist
 fi
+
+echo "Enter to continue..."
+read
 
 cp -r src/* dist/
 
