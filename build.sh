@@ -50,6 +50,7 @@ function compileFiles {
 
 if [ ! -d dist ]
 then
+  rm -rf dist
   mkdir dist
 fi
 
