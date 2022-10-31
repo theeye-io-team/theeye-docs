@@ -1,18 +1,16 @@
-Configuración y arquitectura del producto
+# Configuración y arquitectura del producto
 
-Puertos utilizados
-------------------
+## Puertos utilizados
 
-|     |     |     |
-| --- | --- | --- |
-| 80  | Http redirect a 443 | Interfaz Web |
-| 6080 | http | Interfaz Web (solo localhost) |
-| 60080 | http | API (parte de los bots están actualmente funcionando con este servicio. No puede ser desactivado hasta que sean migrados al 10443) |
-| 443 | https | Interfaz Web Https / SSL |
-| 10443 | https | API Https / SSL |
+|       |                     |                                                                                                                                    |
+| ----- | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| 80    | Http redirect a 443 | Interfaz Web                                                                                                                       |
+| 6080  | http                | Interfaz Web (solo localhost)                                                                                                      |
+| 60080 | http                | API (parte de los bots están actualmente funcionando con este servicio. No puede ser desactivado hasta que sean migrados al 10443) |
+| 443   | https               | Interfaz Web Https / SSL                                                                                                           |
+| 10443 | https               | API Https / SSL                                                                                                                    |
 
-NGINX Application Gateway (no docker)
--------------------------------------
+## NGINX Application Gateway (no docker)
 
 Este servicio es particular de cada implementación.
 
@@ -20,8 +18,7 @@ Se utiliza como gateway para las solicitudes de acceso a la aplicación principa
 
 Configuración estándar en /etc/nginx/
 
-Filesystem
-----------
+## Filesystem
 
 Componentes principales de TheEye.
 
@@ -29,19 +26,21 @@ Cada componente de la aplicación se ejecuta en containers dockers aislados.
 
 Para consultar los componentes actualmente instaladas se utiliza el siguiente comando docker standard:
 
+```bash
 docker images
+```
 
 Versiones de las imágenes docker actualmente instaladas:
 
-|     |     |     |
-| --- | --- | --- |
-| theeye-api_gateway | f6f77fde1172 | 1.3.1 |
-| theeye-supervisor | c9d1ee7e7520 | 2.3.0-4-gc96ec33 |
-| theeye-web |     | 2.3.0-6-g50eb549 |
-| redis | 84c5f6e03bf0 | 6.0.5 |
-| mongodb | 0a2f1fdf242c | 4.2 |
+| Repositorio        | Image ID     | Tag              |
+| ------------------ | ------------ | ---------------- |
+| theeye-api_gateway | f6f77fde1172 | 1.3.1            |
+| theeye-supervisor  | c9d1ee7e7520 | 2.3.0-4-gc96ec33 |
+| theeye-web         |              | 2.3.0-6-g50eb549 |
+| redis              | 84c5f6e03bf0 | 6.0.5            |
+| mongodb            | 0a2f1fdf242c | 4.2              |
 
-Docker compose
+## Docker compose
 
 Archivo de arranque/detención de la aplicación y configuración. Se utiliza el siguiente comando docker standard.
 
@@ -51,13 +50,13 @@ Detener: docker-compose down
 
 Nota: Las últimas versiones de docker incorporan el comando docker compose. En caso de actualizar la versión se debe reemplazar el guión por un espacio.
 
-|     |     |
-| --- | --- |
-| /opt/theeye/docker-comafi.yml | Producción |
+|                                        |                                                      |
+| -------------------------------------- | ---------------------------------------------------- |
+| /opt/theeye/docker-comafi.yml          | Producción                                           |
 | /opt/theeye/docker-gateway-compose.yml | Archivo de soporte para iniciar solamente el gateway |
-| /opt/theeye/docker-mongodb-compose.yml | Archivo de soporte para inciar solamente mongodb |
+| /opt/theeye/docker-mongodb-compose.yml | Archivo de soporte para inciar solamente mongodb     |
 
-Archivos de configuración
+## Archivos de configuración
 
 Para el funcionamiento de cada componente de la aplicación son también necesarios los archivos de configuración para cada contenedor.
 
@@ -65,22 +64,22 @@ Para el funcionamiento de cada componente de la aplicación son también necesar
 
 /opt/theeye/configs/gateway.js
 
-Base de Datos.
+## Base de Datos.
 
-MongoDB
+### MongoDB
 
 La base de datos es MongoDB. Se almacenan los datos de configuración de los bots. Parte de esta información almacenada es crítica para el funcionamiento de los robots y la configuración de las automatizaciones.
 
-Redis
+### Redis
 
 El componente Redis se utiliza como caché de datos, para envío de mensajes, la conexión de sockets y para almacenamiento de las sesiones de usuario. No contiene información persistente ni crítica.
 
 Directorios montados para los datos generados por los dockers.
 
-|     |     |
-| --- | --- |
+|                      |                                   |
+| -------------------- | --------------------------------- |
 | /srv/docker/mongodb4 | datos interno de la base de datos |
-| /srv/docker/redis | datos de la cache |
+| /srv/docker/redis    | datos de la cache                 |
 
 NOTA: La base de datos MongoDB necesita backup periódico
 
