@@ -3,6 +3,16 @@
 
 ## Verificar estado actual de la instalación
 
+### Pasos previos de verificación
+
+* Versiones actualmente instaladas
+
+* Versiones disponible. En especial changelog por cambios de configuración o breaking changes.
+
+* Ultimo backup
+
+* Imagenes docker necesarias descargadas
+
 ### Versionado
 
 Los cambios que incluye cada versión se encuentran disponibles en el changelog.
@@ -105,9 +115,11 @@ Para obtener los archivos estáticos que se encuentran dentro de la imagen hay q
 
 ```
 
-docker run --rm -dit --name 'theeye-web-export' -v $(pwd)/web:/output 'theeye/theeye-web' sh /app/misc/quickstart/export.sh
+docker run --rm -dit --name 'theeye-web-export' -v $(pwd)/web:/output 'theeye/theeye-web:VERSION' sh /app/misc/quickstart/export.sh
 
 ```
+
+Si no se elige VERSION docker asume latest
 
 Este comando genera un directorio web dentro del directorio actual. El contenido generado es el siguiente
 
@@ -175,4 +187,10 @@ La actualización estándar consiste en ejecutar los siguientes comandos.
     
 
 * * *
+
+### Rollback
+
+En caso de que la actualización falle y sea necesario restablecer la versión anterior a la actualización solo se deben sustituir las imagenes docker.
+
+Para la Web es necesario solamente sustituir el directorio web por la versión anterior
 
