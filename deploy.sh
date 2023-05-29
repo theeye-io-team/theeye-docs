@@ -1,6 +1,4 @@
 
-#bash ./build.sh
-
 THEEYE_DOCS_URL=https://documentation.theeye.io ./build.sh
 
 aws s3 sync dist/ s3://${1}/

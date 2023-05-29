@@ -223,7 +223,7 @@ no se observan errores.
 
 Se puede conocer el estado de las apis utilizando los endpoints de status.
 
-#### En el puerto 6080 local esta la interfaz web, sin pasar por proxy o balanceador de carga.
+En el puerto 6080 local esta la interfaz web, sin pasar por proxy o balanceador de carga.
 
 Responde con el HTML de la pagina principal
 
