@@ -194,3 +194,150 @@ En caso de que la actualización falle y sea necesario restablecer la versión a
 
 Para la Web es necesario solamente sustituir el directorio web por la versión anterior
 
+* * *
+
+## Verificación de funcionamiento del ambiente
+
+### Docker ps
+
+se puede consultar el estado de los contenedores.
+**Nota**: docker ps corre como root
+
+
+![](./images/status_1.png)
+
+En la imagen vemos que esta todo iniciado y funcionando.
+
+### Docker logs.
+
+Permite detectar si hubiera algún error en los principales contenedor que son el supervisor y el gateway.
+
+
+![](./images/status_2.png)
+
+![](./images/status_3.png)
+
+no se observan errores.
+
+### Endpoints de status
+
+Se puede conocer el estado de las apis utilizando los endpoints de status.
+
+#### En el puerto 6080 local esta la interfaz web, sin pasar por proxy o balanceador de carga.
+
+Responde con el HTML de la pagina principal
+
+[http://127.0.0.1:60080/](http://127.0.0.1:60080/)
+
+
+
+![](./images/status_4.png)
+
+
+#### En el puerto 60080 esta la api de los bots
+
+[http://127.0.0.1:60080/api/status](http://127.0.0.1:60080/api/status)
+
+
+![](./images/status_5.png)
+
+
+
+#### En el puerto 6080 esta el gateway de autenticación.
+
+
+[http://127.0.0.1:6080/api/status](http://127.0.0.1:6080/api/status)
+
+
+
+![](./images/status_6.png)
+
+
+
+como se ve en las imagenes esta todo funcionando correctamente.
+
+### login vía api.
+
+Para el login local se debe consultar la base de datos y el servicio de cache para generar una sesion.
+De esta forma nos aseguramos que el funcionamiento de ambas bases de dato es correcto
+
+
+```
+    curl -X POST http://user:password@localhost:6080/api/auth/login
+```
+
+la respuesta es la siguiente
+
+```
+
+    HTTP/1.1 200 OK
+    X-Powered-By: Express
+    Access-Control-Allow-Origin: *
+    Access-Control-Allow-Methods: GET,PUT,PATCH,POST,DELETE,OPTIONS
+    Access-Control-Allow-Credentials: true
+    Access-Control-Allow-Headers: Origin, Accept, User-Agent, Accept-Charset, Cache-Control, Accept-Encoding, Content-Type, Authorization, Content-Length, X-Requested-With
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 216
+    ETag: W/"d8-ZKLqL7tneYNOie2+ercs1RZug20"
+    Vary: Accept-Encoding
+    Date: Mon, 29 May 2023 15:49:18 GMT
+    Connection: keep-alive
+    Keep-Alive: timeout=5
+
+    {"access_token":"YYYYY","credential":"XXXXX"}
+
+```
+
+al devolver un access token se puede asegurar que esta funcionando OK .
+
+
+Con el endpoint de profile podemos confirmar que la sesión generada es válida y nos permite acceder a todos los servicios
+
+```
+
+curl -X GET 'http://127.0.0.1:6080/api/session/profile?access_token=YYYYY'
+
+```
+
+dara una respuesta como la siguiente
+
+```
+
+{
+  "id": "111111111111111111111111",
+  "customers": [
+    {
+      "name": "AppTesting",
+      "id": "222222222222222222222222"
+    },
+    {
+      "name": "Administracion",
+      "id": "333333333333333333333333"
+    },
+  ],
+  "name": "I am ThEye",
+  "username": "facugoncio",
+  "email": "facugon@theeye.io",
+  "onboardingCompleted": true,
+  "current_customer": {
+    "id": "222222222222222222222222",
+    "name": "AppTesting",
+    "display_name": "Apps"
+  },
+  "notifications": {
+    "mute": false,
+    "push": true,
+    "email": true,
+    "desktop": true,
+    "notificationFilters": [
+      {
+        "topic": "job-crud"
+      }
+    ]
+  },
+  "credential": "owner",
+  "protocol": "local",
+  "member_id": "444444444444444444444444"
+}
+
+```
