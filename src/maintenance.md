@@ -15,9 +15,15 @@
 
 ### Versionado
 
-Los cambios que incluye cada versión se encuentran disponibles en el changelog.
+Los cambios que incluye cada versión se encuentran disponibles en el changelog de cada componente.
 
-[https://github.com/theeye-io-team/theeye-changelog](https://github.com/theeye-io-team/theeye-changelog)
+<!--[https://github.com/theeye-io-team/theeye-changelog](https://github.com/theeye-io-team/theeye-changelog)-->
+
+[https://github.com/theeye-io-team/theeye-supervisor](https://github.com/theeye-io-team/theeye-supervisor/blob/master/CHANGELOG.md)
+
+[https://github.com/theeye-io-team/theeye-gateway](https://github.com/theeye-io-team/theeye-gateway/blob/master/CHANGELOG.md)
+
+[https://github.com/theeye-io-team/theeye-web](https://github.com/theeye-io-team/theeye-web/blob/master/CHANGELOG.md)
 
 En caso de no estar completo, también se encuentra disponible en el log de GitHub de cada repositorio.
 
@@ -49,6 +55,10 @@ docker image inspect theeye/theeye-supervisor|grep APP_VERSION
 
 La última imágen Docker de cada componente del producto se encuentra en Docker Hub.
 Para simplificar la actualización y el mantenimiento hay que mantener unificado el nombre de las imágenes locales con las imágenes en Docker Hub.
+
+Puede ver las imágenes disponibles en la página de documentación.
+
+[Links a Images DockerHub](/docker)
 
 Luego de descargar/sincronizar las últimas imágenes, los nombres quedarán registradas en el filesystem de la siguiente manera.
 
