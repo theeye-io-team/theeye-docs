@@ -1,4 +1,5 @@
 - [Getting started](./)
 - [Docker Images](./docker.md)
+- [Changelog](./changelog.md)
 - [Arquitechture (Spanish)](./arq.md)
 - [Maintenance (Spanish)](./maintenance.md)
