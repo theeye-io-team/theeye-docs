@@ -351,3 +351,82 @@ dara una respuesta como la siguiente
 }
 
 ```
+
+
+## Script de chequeo.
+
+El siguiente script de shell incluye todos los pasos mencionados anteriormente
+
+
+```bash
+#!/bin/bash
+# nombre : `checkUpdate.sh`
+
+main () {
+
+  wd="${THEEYE_INSTALL_DIRECTORY:-/opt/theeye}"
+  log "Directorio de instalacion: ${wd}"
+
+  # docker logs
+
+  log "Estado de los dockers"
+  docker ps
+
+  log "Gateway"
+  docker logs theeye-gateway
+
+  log "Supervisor"
+  docker logs theeye-supervisor
+
+  # status.
+  # esto funciona si las api se encuentran exponiendo puerto localmente.
+
+  log "Consultando la interfaz Web"
+  curl 'http://127.0.0.1:6080/' # interfaz web
+
+  log "Consultando API Supervisor"
+  curl 'http://127.0.0.1:60080/api/status' # supervisor
+
+  log "Consultando API Gateway"
+  curl 'http://127.0.0.1:6080/api/status' # gateway
+
+  log "Version de la web"
+  grep -R 'APP_VERSION' "${wd}/web/index.html"
+
+  # si dispone de un usuario lo puede proporcionar utilizando variables de entorno
+  #
+  # THEEYE_USER="user" THEEYE_PASSWORD="password" bash ./checkPostUpdate.sh
+  #
+  user="${THEEYE_USER:-user}"
+  password="${THEEYE_PASSWORD:-password}"
+  
+  log "Intentando autenticacion"
+  curl -si -X POST http://${user}:${password}@127.0.0.1:6080/api/auth/login
+
+  echo ""
+  
+  curl -si -X POST http://${user}:${password}@127.0.0.1:6080/api/auth/login | grep HTTP
+  
+  # con un usuario valido la respuesta sera 200
+  # sin proporcionar usuario o con uno invalido la respuesta debe ser 401
+
+  log "Fin"
+
+}
+
+log () {
+  echo "" ## white space
+  echo "---------------------"
+  echo "${1}"
+  echo "---------------------"
+}
+
+main
+
+```
+
+se ejecuta de la siguiente manera
+
+```bash
+sudo THEEYE_INSTALL_DIRECTORY="/home/ubuntu" bash checkUpdate.sh
+```
